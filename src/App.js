@@ -3,12 +3,41 @@ import React, {useState, useEffect} from 'react'
 import { Flex, Center, VStack, Heading, Spacer, Button } from '@chakra-ui/react'
 import { collection, doc, updateDoc, onSnapshot } from "firebase/firestore";
 import { db } from './firebase'
-
+import { getAuth, signInWithPopup, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth";
 
 function App() {
 
   const [dollars, setDollars] = useState([])
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const dollarsCollection = collection(db, 'dollars')
+
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+  const onSignIn = () => {
+    signInWithPopup(auth, provider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+    }).catch((error) => {
+      // // Handle Errors here.
+      // const errorCode = error.code;
+      // const errorMessage = error.message;
+      // // The email of the user's account used.
+      // const email = error.email;
+      // // The AuthCredential type that was used.
+      // const credential = GoogleAuthProvider.credentialFromError(error);
+    });
+  }
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setIsLoggedIn(true)
+    } else {
+      setIsLoggedIn(false)
+    }
+  });
 
   useEffect(() => {
     const unsub = onSnapshot(dollarsCollection, (snapshot) => {
@@ -35,7 +64,8 @@ function App() {
     await updateDoc(childDoc, newField)
   }
 
-  console.log(dollars)
+  // console.log(dollars)
+  // console.log(isLoggedIn)
 
   return (
     <div className="App">
@@ -45,7 +75,7 @@ function App() {
           {dollars.map((child) => {
             let dollarColor
             let dollarSize
-            if (child.dollars == 0) {
+            if (child.dollars === 0) {
               dollarColor = '#000'
               dollarSize = 'xl'
             }
@@ -68,14 +98,15 @@ function App() {
                 <Spacer />
                 <Heading color={dollarColor} as="h1" size={dollarSize}>${child.dollars}</Heading>
                 <Flex justify="space-around" w="50%" pt="10px">
-                  <Button size='lg' onClick={() => decreaseDollars(child.id, child.dollars)}>-</Button>
-                  <Button size='lg' onClick={() => increaseDollars(child.id, child.dollars)}>+</Button>
+                  {isLoggedIn && <Button size='lg' onClick={() => decreaseDollars(child.id, child.dollars)}>-</Button>}
+                  {isLoggedIn && <Button size='lg' onClick={() => increaseDollars(child.id, child.dollars)}>+</Button>}
                 </Flex>
                 <Spacer />
-                <Button size='sm' onClick={() => resetDollars(child.id, child.dollars)}>Reset</Button>
+                {isLoggedIn && <Button size='sm' onClick={() => resetDollars(child.id, child.dollars)}>Reset</Button>}
               </VStack>
             )
           })}
+        {!isLoggedIn && <Button onClick={onSignIn}>Log In</Button> }
         </VStack>
       </Center>
     </div>
