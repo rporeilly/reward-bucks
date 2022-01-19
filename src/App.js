@@ -97,11 +97,13 @@ function App() {
                 <Heading as="h4" size='md' borderBottom="1px solid">{child.name}'s Target Bucks</Heading>
                 <Spacer />
                 <Heading color={dollarColor} as="h1" size={dollarSize}>${child.dollars}</Heading>
+                {isLoggedIn &&
                 <Flex justify="space-around" w="50%" pt="10px">
-                  {isLoggedIn && <Button size='lg' onClick={() => decreaseDollars(child.id, child.dollars)}>-</Button>}
-                  {isLoggedIn && <Button size='lg' onClick={() => increaseDollars(child.id, child.dollars)}>+</Button>}
-                </Flex>
-                <Spacer />
+                  <Button size='lg' onClick={() => decreaseDollars(child.id, child.dollars)}>-</Button>
+                  <Button size='lg' onClick={() => increaseDollars(child.id, child.dollars)}>+</Button>
+                </Flex>}
+
+                {isLoggedIn && <Spacer />}
                 {isLoggedIn && <Button size='sm' onClick={() => resetDollars(child.id, child.dollars)}>Reset</Button>}
               </VStack>
             )
