@@ -5,15 +5,13 @@ const styles = {
   global: props => ({
     body: {
       color: mode('gray.800', 'whiteAlpha.900')(props),
+      bg: '#f7f7f7'
     },
     h1: {
       color: mode('#004261', 'white')(props)
     },
     ".wrapper": {
       bg: mode('white', '#141214')(props),
-    },
-    ".red-text": {
-      color: mode('#b55e17', 'whiteAlpha.900')(props),
     },
     ".chakra-accordion p, .chakra-portal p": {
       fontSize: '11px',
@@ -51,9 +49,9 @@ const Button = {
   variants: {
     outline: {
       border: "2px solid",
-      borderColor: "#004261",
-      color: "white",
-      bg: "#004261",
+      // borderColor: "#004261",
+      // color: "white",
+      // bg: "#004261",
     },
     solid: {
       bg: "#004261",
