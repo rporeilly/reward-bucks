@@ -96,13 +96,12 @@ function App() {
             }
             return (
               <VStack w="300px" p="20px 0" key={child.id}>
-                <Confetti
+                {confetti && <Confetti
                   recycle={false}
-                  run={confetti}
                   numberOfPieces={700}
                   tweenDuration={10000}
                   initialVelocityY={10, 20}
-                />
+                />}
                 <Heading as="h4" size='md' fontWeight="normal" borderBottom="1px solid">{child.name}'s Target Bucks</Heading>
                 <Spacer />
                 <Heading color={dollarColor} as="h1" size={dollarSize}>${child.dollars}</Heading>
