@@ -92,7 +92,6 @@ function App() {
               dollarSize = 'xl'
             }
             return (
-
               <VStack w="320px" p="20px 0" key={child.id}>
                 <Heading as="h4" size='md' borderBottom="1px solid">{child.name}'s Target Bucks</Heading>
                 <Spacer />
