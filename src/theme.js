@@ -5,7 +5,7 @@ const styles = {
   global: props => ({
     body: {
       color: mode('gray.800', 'whiteAlpha.900')(props),
-      bg: '#f7f7f7'
+      bg: '#e9e9e9'
     },
     h1: {
       color: mode('#004261', 'white')(props)
@@ -24,12 +24,7 @@ const styles = {
 const Button = {
   // The styles all button have in common
   baseStyle: {
-    fontWeight: "bold",
-    borderRadius: "base",
-    _hover: {
-      bg: "white",
-      color: "#004261",
-    },
+
   },
 
   // Two sizes: sm and md
@@ -48,20 +43,15 @@ const Button = {
   // Two variants: outline and solid
   variants: {
     outline: {
-      border: "2px solid",
       // borderColor: "#004261",
       // color: "white",
       // bg: "#004261",
     },
     solid: {
-      bg: "#004261",
-      color: "white",
     },
   },
   // The default size and variant values
   defaultProps: {
-    size: "md",
-    variant: "outline",
   },
 }
 

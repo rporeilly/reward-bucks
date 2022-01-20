@@ -71,39 +71,39 @@ function App() {
     <div className="App">
       <Center>
 
-      <VStack boxShadow="xl" mt="10" p="6" rounded="2xl" bg="white">
+      <VStack boxShadow="lg" mt="10" p="6" rounded="2xl" bg="white">
           {dollars.map((child) => {
             let dollarColor
             let dollarSize
             if (child.dollars === 0) {
               dollarColor = '#000'
-              dollarSize = 'xl'
+              dollarSize = '2xl'
             }
             if (child.dollars > 0 && child.dollars < 10) {
               dollarColor = '#127800'
-              dollarSize = 'xl'
+              dollarSize = '2xl'
             }
             if (child.dollars >= 10) {
               dollarColor = '#1fd100'
-              dollarSize = '2xl'
+              dollarSize = '3xl'
             }
             if (child.dollars < 0) {
               dollarColor = '#bf0000'
-              dollarSize = 'xl'
+              dollarSize = '2xl'
             }
             return (
-              <VStack w="320px" p="20px 0" key={child.id}>
-                <Heading as="h4" size='md' borderBottom="1px solid">{child.name}'s Target Bucks</Heading>
+              <VStack w="300px" p="20px 0" key={child.id}>
+                <Heading as="h4" size='md' fontWeight="normal" borderBottom="1px solid">{child.name}'s Target Bucks</Heading>
                 <Spacer />
                 <Heading color={dollarColor} as="h1" size={dollarSize}>${child.dollars}</Heading>
                 {isLoggedIn &&
                 <Flex justify="space-around" w="50%" pt="10px">
-                  <Button size='lg' onClick={() => decreaseDollars(child.id, child.dollars)}>-</Button>
-                  <Button size='lg' onClick={() => increaseDollars(child.id, child.dollars)}>+</Button>
+                  <Button size='md' colorScheme='red' variant="outline" onClick={() => decreaseDollars(child.id, child.dollars)}>-</Button>
+                  <Button size='md' colorScheme='green' variant="outline" onClick={() => increaseDollars(child.id, child.dollars)}>+</Button>
                 </Flex>}
 
                 {isLoggedIn && <Spacer />}
-                {isLoggedIn && <Button size='sm' onClick={() => resetDollars(child.id, child.dollars)}>Reset</Button>}
+                {isLoggedIn && <Button variant="outline"  size='sm' onClick={() => resetDollars(child.id, child.dollars)}>Reset</Button>}
               </VStack>
             )
           })}
