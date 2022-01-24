@@ -1,15 +1,18 @@
 import './App.css';
 import React, {useState, useEffect} from 'react'
-import { Flex, Center, VStack, Heading, Spacer, Button } from '@chakra-ui/react'
+import { Flex, Center, VStack, Heading, Spacer, Button, Box } from '@chakra-ui/react'
 import { collection, doc, updateDoc, onSnapshot } from "firebase/firestore";
 import { db } from './firebase'
 import { getAuth, signInWithPopup, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth";
 import Confetti from 'react-confetti'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
+import { TailSpin } from  'react-loader-spinner'
 
 function App() {
 
   const [dollars, setDollars] = useState([])
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
   const dollarsCollection = collection(db, 'dollars')
 
   const provider = new GoogleAuthProvider();
@@ -43,6 +46,7 @@ function App() {
   useEffect(() => {
     const unsub = onSnapshot(dollarsCollection, (snapshot) => {
       setDollars(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+      setIsLoaded(true)
     })
     return unsub
   }, []);
@@ -71,7 +75,7 @@ function App() {
   return (
     <div className="App">
       <Center>
-
+      {isLoaded ?
       <VStack boxShadow="lg" mt="10" p="6" rounded="2xl" bg="white">
           {dollars.map((child) => {
             let dollarColor
@@ -116,8 +120,21 @@ function App() {
               </VStack>
             )
           })}
+
         {!isLoggedIn && <Button onClick={onSignIn}>Log In</Button> }
+        </VStack> :
+        <VStack minW="300" minH="350px" boxShadow="lg" mt="10" pt="30px" rounded="2xl" bg="white">
+          <Box mt="20%">
+            <TailSpin
+              height="100"
+              width="100"
+              color='#127800'
+              style={{margin: '20px'}}
+              ariaLabel='loading'
+            />
+          </Box>
         </VStack>
+      }
       </Center>
     </div>
   );
