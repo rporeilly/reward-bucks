@@ -74,6 +74,7 @@ function App() {
 
   return (
     <div className="App">
+      <Heading align="center" mt="20px" size="2xl" fontWeight="normal" mb="-25px" as="h1">Target Bucks<sup>™</sup></Heading>
       <Center>
       {isLoaded ?
       <VStack boxShadow="lg" mt="10" p="6" rounded="2xl" bg="white">
@@ -99,16 +100,16 @@ function App() {
               dollarSize = '2xl'
             }
             return (
-              <VStack w="300px" p="20px 0" key={child.id}>
+              <VStack w="300px" p="10px 0" key={child.id}>
                 {confetti && <Confetti
                   recycle={false}
                   numberOfPieces={700}
                   tweenDuration={10000}
                   initialVelocityY={10, 20}
                 />}
-                <Heading as="h4" size='md' fontWeight="normal" borderBottom="1px solid">{child.name}'s Target Bucks</Heading>
+                <Heading as="h4" size='md'>{child.name}:</Heading>
                 <Spacer />
-                <Heading color={dollarColor} as="h1" size={dollarSize}>${child.dollars}</Heading>
+                <Heading color={dollarColor} as="h2" borderBottom="1px solid" pb="5px" size={dollarSize}>${child.dollars}.00</Heading>
                 {isLoggedIn &&
                 <Flex justify="space-around" w="50%" pt="10px">
                   <Button size='md' colorScheme='red' variant="outline" onClick={() => decreaseDollars(child.id, child.dollars)}>-</Button>
@@ -121,7 +122,7 @@ function App() {
             )
           })}
 
-        {!isLoggedIn && <Button onClick={onSignIn}>Log In</Button> }
+
         </VStack> :
         <VStack minW="300" minH="350px" boxShadow="lg" mt="10" pt="30px" rounded="2xl" bg="white">
           <Box mt="20%">
@@ -135,6 +136,9 @@ function App() {
           </Box>
         </VStack>
       }
+      </Center>
+      <Center m="30px 0">
+        {!isLoggedIn && <Button colorScheme='blue' onClick={onSignIn}>Log In</Button> }
       </Center>
     </div>
   );
