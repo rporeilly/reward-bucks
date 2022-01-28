@@ -74,7 +74,7 @@ function App() {
 
   return (
     <div className="App">
-      <Heading align="center" mt="20px" size="2xl" fontWeight="normal" mb="-25px" as="h1">Target Bucks<sup>™</sup></Heading>
+      <Heading color="white" align="center" mt="20px" size="2xl" fontWeight="normal" mb="-25px" as="h1">Target Bucks<sup>™</sup></Heading>
       <Center>
       {isLoaded ?
       <VStack boxShadow="lg" mt="10" p="6" rounded="2xl" bg="white">
@@ -137,7 +137,7 @@ function App() {
       }
       </Center>
       <Center m="30px 0">
-        {!isLoggedIn && <Button colorScheme='blue' onClick={onSignIn}>Log In</Button> }
+        {!isLoggedIn && <Button colorScheme='gray' onClick={onSignIn}>Log In</Button> }
       </Center>
     </div>
   );

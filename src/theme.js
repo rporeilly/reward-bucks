@@ -5,7 +5,9 @@ const styles = {
   global: props => ({
     body: {
       color: mode('gray.800', 'whiteAlpha.900')(props),
-      bg: '#e9e9e9'
+      backgroundColor: '#829786',
+      backgroundImage: 'url("black-linen.png")'
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
     },
     h1: {
       color: mode('#004261', 'white')(props)
