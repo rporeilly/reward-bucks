@@ -84,32 +84,31 @@ function App() {
             let confetti = false
             if (child.dollars === 0) {
               dollarColor = '#000'
-              dollarSize = '2xl'
+              dollarSize = '4xl'
             }
             if (child.dollars > 0 && child.dollars < 10) {
               dollarColor = '#127800'
-              dollarSize = '2xl'
+              dollarSize = '4xl'
             }
             if (child.dollars >= 10) {
               dollarColor = '#1fd100'
-              dollarSize = '3xl'
+              dollarSize = '4xl'
               confetti = true
             }
             if (child.dollars < 0) {
               dollarColor = '#bf0000'
-              dollarSize = '2xl'
+              dollarSize = '4xl'
             }
             return (
               <VStack w="300px" p="10px 0" key={child.id}>
-                {confetti && <Confetti
+                 {confetti && <Confetti
                   recycle={false}
                   numberOfPieces={700}
                   tweenDuration={10000}
-                  initialVelocityY={10, 20}
                 />}
                 <Heading as="h4" size='md'>{child.name}:</Heading>
                 <Spacer />
-                <Heading color={dollarColor} as="h2" borderBottom="1px solid" pb="5px" size={dollarSize}>${child.dollars}.00</Heading>
+                <Heading color={dollarColor} as="h2" pb="5px" size={dollarSize}>${child.dollars}.00</Heading>
                 {isLoggedIn &&
                 <Flex justify="space-around" w="50%" pt="10px">
                   <Button size='md' colorScheme='red' variant="outline" onClick={() => decreaseDollars(child.id, child.dollars)}>-</Button>
