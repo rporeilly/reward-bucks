@@ -146,7 +146,7 @@ function App() {
       }
       </Center>
       <Center m="30px 0">
-        {!isLoggedIn && searchParams == '440097206' ? <Button colorScheme='gray' onClick={onSignIn}>Log In</Button> : null}
+        {!isLoggedIn && searchParams == process.env.REACT_APP_paramKey ? <Button colorScheme='gray' onClick={onSignIn}>Log In</Button> : null}
       </Center>
     </div>
   );
