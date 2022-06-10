@@ -1,5 +1,6 @@
 import './App.css';
 import React, {useState, useEffect} from 'react'
+import { useLocation } from "react-router-dom";
 import { Flex, Center, VStack, Heading, Spacer, Button, Box } from '@chakra-ui/react'
 import { collection, doc, updateDoc, onSnapshot } from "firebase/firestore";
 import { db } from './firebase'
@@ -13,7 +14,11 @@ function App() {
   const [dollars, setDollars] = useState([])
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [searchParams, setSearchParams] = useState()
   const dollarsCollection = collection(db, 'dollars')
+
+  const search = useLocation().search;
+  const id = new URLSearchParams(search).get('showLogin');
 
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
@@ -24,7 +29,8 @@ function App() {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       // The signed-in user info.
-      const user = result.user;
+      const user = result.user.uid;
+      console.log(user)
     }).catch((error) => {
       // // Handle Errors here.
       // const errorCode = error.code;
@@ -35,6 +41,7 @@ function App() {
       // const credential = GoogleAuthProvider.credentialFromError(error);
     });
   }
+  // console.log(user)
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setIsLoggedIn(true)
@@ -44,6 +51,7 @@ function App() {
   });
 
   useEffect(() => {
+    setSearchParams(id)
     const unsub = onSnapshot(dollarsCollection, (snapshot) => {
       setDollars(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
       setIsLoaded(true)
@@ -69,6 +77,7 @@ function App() {
     await updateDoc(childDoc, newField)
   }
 
+  console.log(searchParams)
   // console.log(dollars)
   // console.log(isLoggedIn)
 
@@ -137,7 +146,7 @@ function App() {
       }
       </Center>
       <Center m="30px 0">
-        {!isLoggedIn && <Button colorScheme='gray' onClick={onSignIn}>Log In</Button> }
+        {!isLoggedIn && searchParams == '440097206' ? <Button colorScheme='gray' onClick={onSignIn}>Log In</Button> : null}
       </Center>
     </div>
   );
