@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Flex, Center, VStack, Heading, Spacer, Button, Box } from '@chakra-ui/react';
 import { collection, doc, updateDoc, onSnapshot, CollectionReference, DocumentData } from 'firebase/firestore';
@@ -13,7 +13,10 @@ function App(): JSX.Element {
   const [dollars, setDollars] = useState<Dollar[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const dollarsCollection: CollectionReference<DocumentData> = collection(db, 'dollars');
+  const dollarsCollection = useMemo(
+    () => collection(db, 'dollars'),
+    []
+  );
 
   const search = useLocation().search;
   const id = new URLSearchParams(search).get('showLogin');
@@ -76,7 +79,13 @@ function App(): JSX.Element {
     });
   };
 
-  const getDollarStyles = (dollars: number): { color: string; size: string; confetti: boolean } => {
+  interface DollarStyles {
+    color: string;
+    size: string;
+    confetti: boolean;
+  }
+
+  const getDollarStyles = (dollars: number): DollarStyles => {
     let dollarColor = '#000';
     let dollarSize = '4xl';
     let confetti = false;
