@@ -105,13 +105,7 @@ function App(): JSX.Element {
   return (
     <div className="App">
       <Heading
-        as="h1"
-        color="white"
-        textAlign="center"
-        mt="20px"
-        size="2xl"
-        fontWeight="normal"
-        mb="-25px"
+        as="h1" color="white" textAlign="center" mt="20px" size="2xl" fontWeight="normal" mb="-25px"
       >
         Target Bucks<sup>™</sup>
       </Heading>
